@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <h2>Your Cart</h2>
+
+  <% if (session.message) { %>
+    <p class="success"><%= session.message %></p>
+    <% session.message = null; %>
+  <% } %>
+
+  <% if (session.cart && session.cart.length > 0) { %>
+    <div class="products">
+      <% session.cart.forEach((item, index) => { %>
+        <div class="card">
+          <img src="<%= item.image %>" alt="<%= item.name %>">
+          <h3><%= item.name %></h3>
+          <p><%= item.description %></p>
+          <p><strong>Price: ₹<%= item.price %></strong></p>
+          <form action="/remove-from-cart" method="POST">
+            <input type="hidden" name="index" value="<%= index %>">
+            <button type="submit">Remove</button>
+          </form>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <p>Your cart is empty.</p>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

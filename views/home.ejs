@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <% if (session.message) { %>
+    <p class="success"><%= session.message %></p>
+    <% session.message = null; %>
+  <% } %>
+
+  <h2>All Products</h2>
+
+  <div class="products">
+    <% products.forEach(product => { %>
+      <div class="card">
+        <img src="<%= product.image %>" alt="<%= product.name %>">
+        <h3><%= product.name %></h3>
+        <p><%= product.description %></p>
+        <p><strong>Price: ₹<%= product.price %></strong></p>
+
+        <form action="/add-to-cart" method="POST">
+          <input type="hidden" name="productId" value="<%= product._id %>">
+          <button type="submit">Buy Now</button>
+        </form>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
